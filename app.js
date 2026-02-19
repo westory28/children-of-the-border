@@ -210,37 +210,47 @@ function rollDice(callback) {
     const cube2 = document.getElementById('cube2');
     const totalDisplay = document.getElementById('dice-total');
 
-    // Reset classes
+    // Reset state
     cube1.className = 'cube';
     cube2.className = 'cube';
     totalDisplay.innerText = '';
 
-    // Trigger Reflow to allow restart animation
+    // Force reflow
     void cube1.offsetWidth;
 
-    // Start rolling animation (optional, via CSS class if needed, or just transition)
-    // Here we just set a random rotation first for effect, then final
+    // Start rolling animation
+    cube1.classList.add('rolling');
+    cube2.classList.add('rolling');
 
+    // Determine result
     const die1 = Math.floor(Math.random() * 6) + 1;
     const die2 = Math.floor(Math.random() * 6) + 1;
     const total = die1 + die2;
 
-    // Apply final rotation classes
-    // We use a slight timeout to ensure the transition happens
+    // Stop rolling and show result after 1 second
     setTimeout(() => {
+        cube1.classList.remove('rolling');
+        cube2.classList.remove('rolling');
+
+        // We need a small delay to allow the class removal to register before adding the transform class
+        // Otherwise the transition might not trigger correctly from the chaotic state
+        // To fix this, we can set inline styles for random rotation during rolling in a real phys engine, 
+        // but for CSS, we just switch classes.
+
+        // Add specific rotation class
         cube1.classList.add(`show-${die1}`);
         cube2.classList.add(`show-${die2}`);
-    }, 100);
 
-    // Show total after animation ends (1s in CSS)
-    setTimeout(() => {
+        // Show total
         totalDisplay.innerText = `Total: ${total}`;
 
+        // Close overlay
         setTimeout(() => {
             elements.overlay.classList.add('hidden');
             callback(total);
         }, 1500);
-    }, 1100);
+
+    }, 1000);
 }
 
 function applyResult(text, hpChange) {

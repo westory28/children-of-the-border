@@ -24,16 +24,28 @@
 }
 
 .cube.rolling {
-    animation: spin 0.5s infinite linear;
+    animation: tumble 0.6s infinite linear;
 }
 
-@keyframes spin {
+@keyframes tumble {
     0% {
-        transform: translateZ(-50px) rotateX(0) rotateY(0);
+        transform: translateZ(-50px) rotateX(0) rotateY(0) rotateZ(0);
+    }
+
+    25% {
+        transform: translateZ(-50px) rotateX(180deg) rotateY(90deg) rotateZ(45deg);
+    }
+
+    50% {
+        transform: translateZ(-50px) rotateX(360deg) rotateY(180deg) rotateZ(90deg);
+    }
+
+    75% {
+        transform: translateZ(-50px) rotateX(540deg) rotateY(270deg) rotateZ(135deg);
     }
 
     100% {
-        transform: translateZ(-50px) rotateX(360deg) rotateY(360deg);
+        transform: translateZ(-50px) rotateX(720deg) rotateY(360deg) rotateZ(180deg);
     }
 }
 
