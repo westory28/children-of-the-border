@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>통일 시뮬레이션 RPG: 경계의 아이들</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dice.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Nanum+Pen+Script&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <div id="game-container">
         <!-- Status Bar -->
@@ -38,7 +43,7 @@
                 <!-- Image or visual effects go here -->
                 <img id="scene-image" src="" alt="Scene" class="hidden">
             </div>
-            
+
             <div id="dialogue-area">
                 <div id="chat-history">
                     <!-- Messages will be appended here -->
@@ -62,12 +67,33 @@
 
         <!-- Overlay for Dice/Effects -->
         <div id="overlay" class="hidden">
-            <div id="dice-result">
-                <span class="dice-val"></span>
+            <div id="dice-container">
+                <div class="scene">
+                    <div class="cube" id="cube1">
+                        <div class="cube_face cube_face--front">1</div>
+                        <div class="cube_face cube_face--back">6</div>
+                        <div class="cube_face cube_face--right">3</div>
+                        <div class="cube_face cube_face--left">4</div>
+                        <div class="cube_face cube_face--top">2</div>
+                        <div class="cube_face cube_face--bottom">5</div>
+                    </div>
+                </div>
+                <div class="scene">
+                    <div class="cube" id="cube2">
+                        <div class="cube_face cube_face--front">1</div>
+                        <div class="cube_face cube_face--back">6</div>
+                        <div class="cube_face cube_face--right">3</div>
+                        <div class="cube_face cube_face--left">4</div>
+                        <div class="cube_face cube_face--top">2</div>
+                        <div class="cube_face cube_face--bottom">5</div>
+                    </div>
+                </div>
+                <div id="dice-total"></div>
             </div>
         </div>
     </div>
     <script src="data.js"></script>
     <script src="app.js"></script>
 </body>
+
 </html>

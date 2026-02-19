@@ -206,18 +206,41 @@ function resolveAction(choice) {
 
 function rollDice(callback) {
     elements.overlay.classList.remove('hidden');
+    const cube1 = document.getElementById('cube1');
+    const cube2 = document.getElementById('cube2');
+    const totalDisplay = document.getElementById('dice-total');
+
+    // Reset classes
+    cube1.className = 'cube';
+    cube2.className = 'cube';
+    totalDisplay.innerText = '';
+
+    // Trigger Reflow to allow restart animation
+    void cube1.offsetWidth;
+
+    // Start rolling animation (optional, via CSS class if needed, or just transition)
+    // Here we just set a random rotation first for effect, then final
+
     const die1 = Math.floor(Math.random() * 6) + 1;
     const die2 = Math.floor(Math.random() * 6) + 1;
     const total = die1 + die2;
 
-    const resultSpan = elements.diceResult.querySelector('.dice-val');
-    resultSpan.innerText = `${die1} + ${die2} = ${total}`;
-
-    // Animation delay
+    // Apply final rotation classes
+    // We use a slight timeout to ensure the transition happens
     setTimeout(() => {
-        elements.overlay.classList.add('hidden');
-        callback(total, total >= 10); // Simple callback
-    }, 1500);
+        cube1.classList.add(`show-${die1}`);
+        cube2.classList.add(`show-${die2}`);
+    }, 100);
+
+    // Show total after animation ends (1s in CSS)
+    setTimeout(() => {
+        totalDisplay.innerText = `Total: ${total}`;
+
+        setTimeout(() => {
+            elements.overlay.classList.add('hidden');
+            callback(total);
+        }, 1500);
+    }, 1100);
 }
 
 function applyResult(text, hpChange) {
