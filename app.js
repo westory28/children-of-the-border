@@ -275,7 +275,7 @@ function rollDice(callback) {
 
 function applyResult(text, hpChange) {
     state.hp += hpChange;
-    if (state.hp > 100) state.hp = 100;
+    if (state.hp > 150) state.hp = 150;
     if (state.hp < 0) state.hp = 0;
 
     // Log history
@@ -297,8 +297,8 @@ function applyResult(text, hpChange) {
 }
 
 function updateStatus() {
-    elements.hpText.innerText = `${state.hp}/100`;
-    elements.hpBar.style.width = `${state.hp}%`;
+    elements.hpText.innerText = `${state.hp}/150`;
+    elements.hpBar.style.width = `${(state.hp / 150) * 100}%`;
 
     // Format Time
     const minutes = Math.floor(state.timeRemaining / 60);

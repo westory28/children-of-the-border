@@ -4,28 +4,28 @@ const CHARACTERS = {
         description: "당위와 현실 사이에서 갈등하며 제3의 대안을 찾는 가이드.",
         ability: "조정 (갈등 상황에서 타협점을 찾을 확률 증가)",
         items: ["호루라기", "교과서"],
-        stats: { hp: 100, logic: 5, empathy: 8 }
+        stats: { hp: 150, logic: 5, empathy: 8 }
     },
     realist: {
         name: "현실주의자 (중3 학생)",
         description: "통일 비용과 군 복무를 걱정하며 실질적 이익을 우선시함.",
         ability: "실리 파악 (선택지의 경제적 득실을 미리 간파)",
         items: ["스마트폰", "체크카드"],
-        stats: { hp: 100, logic: 8, empathy: 3 }
+        stats: { hp: 150, logic: 8, empathy: 3 }
     },
     architect: {
         name: "설계자 (통일부 장관)",
         description: "국제 정세의 압박과 국내 여론 분열 사이에서 정책을 조율.",
         ability: "정보 열람 (숨겨진 국제 관계 정보를 획득)",
         items: ["기밀 문서", "위성 전화"],
-        stats: { hp: 100, logic: 9, empathy: 4 }
+        stats: { hp: 150, logic: 9, empathy: 4 }
     },
     witness: {
         name: "목격자 (GP 사병)",
         description: "평화라는 구호와 생명 위협의 괴리 속에서 생존을 갈망.",
         ability: "위기 감지 (돌발적인 무력 충돌 위험을 사전에 감지)",
         items: ["야간투시경", "군번줄"],
-        stats: { hp: 90, logic: 6, empathy: 6 }
+        stats: { hp: 140, logic: 6, empathy: 6 }
     }
 };
 
