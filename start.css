@@ -1,18 +1,26 @@
-/* Start Screen */
+/* Start Screen - Grid Paper Design */
 #start-screen {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--primary-color);
+
+    /* Grid Paper Background */
+    background-color: #fff;
+    background-image:
+        linear-gradient(#e5e5f7 1px, transparent 1px),
+        linear-gradient(90deg, #e5e5f7 1px, transparent 1px);
+    background-size: 20px 20px;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 200;
     text-align: center;
-    color: white;
+    color: #333;
+    /* Dark text for light background */
 }
 
 #start-screen.hidden {
@@ -24,37 +32,54 @@
     font-weight: 800;
     margin: 0;
     line-height: 1.1;
-    text-shadow: 4px 4px 0px #000;
+
+    /* Pencil/Pen style text */
+    color: #000;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+
     font-family: 'Nanum Pen Script', cursive;
-    color: #f1c40f;
     transform: rotate(-3deg);
     margin-bottom: 0.5rem;
+
+    /* Box around logo */
+    border: 3px solid #000;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.2);
 }
 
 .game-subtitle {
     font-size: 1.2rem;
-    margin-top: 0;
-    margin-bottom: 40px;
-    opacity: 0.8;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    color: #555;
+    font-weight: bold;
+    background: #fff;
+    padding: 5px 10px;
+    border: 1px solid #000;
 }
 
 #game-start-btn {
-    padding: 15px 40px;
+    padding: 15px 50px;
     font-size: 1.5rem;
     font-weight: bold;
-    background-color: var(--accent-color);
-    color: white;
+
+    /* Simple black and white style */
+    background-color: #fff;
+    color: #000;
     border: 3px solid #000;
     box-shadow: 5px 5px 0px #000;
+
     cursor: pointer;
-    font-family: inherit;
+    font-family: 'Nanum Pen Script', cursive;
+    /* Handwritten feel */
     transition: transform 0.1s;
 }
 
 #game-start-btn:hover {
     transform: translate(-2px, -2px);
     box-shadow: 7px 7px 0px #000;
-    background-color: #ff6b6b;
+    background-color: #f0f0f0;
 }
 
 #game-start-btn:active {
