@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>통일 시뮬레이션 RPG: 경계의 아이들</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Status Bar -->
+        <header id="status-panel" class="hidden">
+            <div class="status-item">
+                <span class="label">체력</span>
+                <div class="hp-bar-container">
+                    <div id="hp-bar-fill" class="hp-bar-fill" style="width: 100%;"></div>
+                </div>
+                <span id="hp-text">100/100</span>
+            </div>
+            <div class="status-item">
+                <span class="label">턴</span>
+                <span id="turn-text">1/10</span>
+            </div>
+            <div class="status-item">
+                <span class="label">직업</span>
+                <span id="char-class">-</span>
+            </div>
+            <div class="status-item">
+                <span class="label">소지품</span>
+                <span id="inventory">-</span>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main id="scene-display">
+            <div id="visual-area">
+                <!-- Image or visual effects go here -->
+                <img id="scene-image" src="" alt="Scene" class="hidden">
+            </div>
+            
+            <div id="dialogue-area">
+                <div id="chat-history">
+                    <!-- Messages will be appended here -->
+                    <div class="message system">
+                        <p>통일 시뮬레이션 RPG '경계의 아이들'에 오신 것을 환영합니다.<br>준비가 되셨다면 채팅창에 <strong>'게임 시작'</strong>을 입력해주세요.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Interaction Area -->
+        <footer id="interaction-area">
+            <div id="choices-container" class="hidden">
+                <!-- Choice buttons will be injected here -->
+            </div>
+            <div id="input-container">
+                <input type="text" id="user-input" placeholder="명령어를 입력하세요..." autocomplete="off">
+                <button id="send-btn">전송</button>
+            </div>
+        </footer>
+
+        <!-- Overlay for Dice/Effects -->
+        <div id="overlay" class="hidden">
+            <div id="dice-result">
+                <span class="dice-val"></span>
+            </div>
+        </div>
+    </div>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
