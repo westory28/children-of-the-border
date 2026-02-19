@@ -2,7 +2,9 @@
 const state = {
     phase: 0, // 0: Intro, 1: Selection, 2: Main Loop, 3: Ending
     turn: 1,
-    maxTurns: 10,
+    // maxTurns: 10, // Removed turn limit
+    timeRemaining: 15 * 60, // 15 minutes in seconds
+    timerInterval: null,
     hp: 100,
     items: [],
     character: null, // 'mediator', 'realist', etc.
@@ -20,11 +22,10 @@ const elements = {
     statusPanel: document.getElementById('status-panel'),
     hpBar: document.getElementById('hp-bar-fill'),
     hpText: document.getElementById('hp-text'),
-    turnText: document.getElementById('turn-text'),
+    timerText: document.getElementById('timer-text'), // Changed from turnText
     charClass: document.getElementById('char-class'),
     inventory: document.getElementById('inventory'),
     overlay: document.getElementById('overlay'),
-    diceResult: document.getElementById('dice-result'),
     sceneImage: document.getElementById('scene-image'),
     sceneDisplay: document.getElementById('scene-display')
 };
@@ -97,19 +98,31 @@ function selectCharacter(charKey) {
 
     appendMessage('system', `<strong>${state.character.name}</strong>(으)로 시작합니다.`);
 
-    // Start Main Loop
+    // Start Game
     state.phase = 2;
+    startTimer();
     startTurn();
 }
 
+function startTimer() {
+    state.timerInterval = setInterval(() => {
+        state.timeRemaining--;
+        updateStatus();
+
+        if (state.timeRemaining <= 0) {
+            clearInterval(state.timerInterval);
+            endGame(true); // true = time over
+        }
+    }, 1000);
+}
+
 function startTurn() {
-    if (state.turn > state.maxTurns || state.hp <= 0) {
-        endGame();
+    if (state.hp <= 0) {
+        endGame(false);
         return;
     }
 
-    // Load Scenario
-    // Simple logic: Load scenario by ID matching turn number (cycling if needed)
+    // Load Scenario (Cycle through scenarios)
     const scenarioIdx = (state.turn - 1) % SCENARIOS.length;
     state.currentScenario = SCENARIOS[scenarioIdx];
 
@@ -124,7 +137,7 @@ function startTurn() {
     };
 
     setTimeout(() => {
-        appendMessage('gm', `<strong>[Turn ${state.turn}] ${state.currentScenario.title}</strong><br>${state.currentScenario.description}`);
+        appendMessage('gm', `<strong>[Scenario ${state.turn}] ${state.currentScenario.title}</strong><br>${state.currentScenario.description}`);
 
         // Show Options
         const choices = state.currentScenario.choices.map((c, idx) => ({
@@ -169,7 +182,7 @@ function resolveAction(choice) {
         appendMessage('system', "주사위를 굴립니다... (2d6)");
 
         setTimeout(() => {
-            rollDice((total, isSuccess) => {
+            rollDice((total) => {
                 let resultText = "";
                 let hpChange = 0;
 
@@ -234,7 +247,7 @@ function rollDice(callback) {
 
         // We need a small delay to allow the class removal to register before adding the transform class
         // Otherwise the transition might not trigger correctly from the chaotic state
-        // To fix this, we can set inline styles for random rotation during rolling in a real phys engine, 
+        // To fix this, we can set inline styles for random rotation during rolling in a real phys engine,
         // but for CSS, we just switch classes.
 
         // Add specific rotation class
@@ -279,17 +292,26 @@ function applyResult(text, hpChange) {
 function updateStatus() {
     elements.hpText.innerText = `${state.hp}/100`;
     elements.hpBar.style.width = `${state.hp}%`;
-    elements.turnText.innerText = `${state.turn}/${state.maxTurns}`;
+
+    // Format Time
+    const minutes = Math.floor(state.timeRemaining / 60);
+    const seconds = state.timeRemaining % 60;
+    elements.timerText.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
     elements.charClass.innerText = state.character ? state.character.name.split(' ')[0] : '-';
     elements.inventory.innerText = state.items.length > 0 ? state.items[0] + (state.items.length > 1 ? ` 외 ${state.items.length - 1}` : '') : '없음';
 }
 
-function endGame() {
+function endGame(isTimeOver) {
+    clearInterval(state.timerInterval);
+
     let endingMsg = "";
     if (state.hp <= 0) {
         endingMsg = "<h2>GAME OVER</h2><p>당신은 혼란스러운 통일의 과도기를 견뎌내지 못했습니다. 건강이 악화되어 쓰러지고 말았습니다.</p>";
+    } else if (isTimeOver) {
+        endingMsg = "<h2>TIME OVER</h2><p>약속된 시간이 지났습니다. 당신의 선택들이 어떤 미래를 만들었을까요?</p>";
     } else {
-        endingMsg = "<h2>THE END</h2><p>10일간의 여정이 끝났습니다. 당신은 급변하는 사회 속에서 자신만의 자리를 찾아냈습니다.</p>";
+        endingMsg = "<h2>THE END</h2><p>여정이 끝났습니다.</p>";
     }
 
     // Summary
@@ -298,8 +320,13 @@ function endGame() {
         summaryHtml += `- 턴 ${h.turn}: ${h.event} (${h.hpChange >= 0 ? '+' : ''}${h.hpChange})<br>`;
     });
 
-    // Clear choices
-    elements.choicesContainer.innerHTML = `<button class="choice-btn" onclick="location.reload()">다시 시작하기</button>`;
+    // Clear choices and show Link Button + Restart
+    elements.choicesContainer.innerHTML = `
+        <a href="https://forms.gle/Xy7c5kqqPX2dpnPa6" target="_blank" class="choice-btn" style="text-decoration:none; color:inherit; text-align:center; display:block; background-color:#e74c3c; color:white;">
+            📝 설문조사 참여하기 (필수)
+        </a>
+        <button class="choice-btn" onclick="location.reload()">다시 시작하기</button>
+    `;
     elements.choicesContainer.classList.remove('hidden');
 
     appendMessage('system', endingMsg + summaryHtml);
