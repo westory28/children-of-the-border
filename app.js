@@ -22,12 +22,14 @@ const elements = {
     statusPanel: document.getElementById('status-panel'),
     hpBar: document.getElementById('hp-bar-fill'),
     hpText: document.getElementById('hp-text'),
-    timerText: document.getElementById('timer-text'), // Changed from turnText
+    timerText: document.getElementById('timer-text'),
     charClass: document.getElementById('char-class'),
     inventory: document.getElementById('inventory'),
     overlay: document.getElementById('overlay'),
     sceneImage: document.getElementById('scene-image'),
-    sceneDisplay: document.getElementById('scene-display')
+    sceneDisplay: document.getElementById('scene-display'),
+    startScreen: document.getElementById('start-screen'),
+    startBtn: document.getElementById('game-start-btn')
 };
 
 // Initialization
@@ -35,6 +37,21 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.sendBtn.addEventListener('click', handleInput);
     elements.userInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') handleInput();
+    });
+
+    // Start Button Event
+    elements.startBtn.addEventListener('click', () => {
+        elements.startScreen.classList.add('hidden');
+        state.phase = 1;
+
+        // Initial intro message for context
+        appendMessage('system', "통일 시뮬레이션 RPG '경계의 아이들'에 오신 것을 환영합니다.");
+
+        // Slight delay for effect
+        setTimeout(() => {
+            appendMessage('system', "캐릭터를 선택해주세요.");
+            showCharacterSelection();
+        }, 500);
     });
 });
 
@@ -53,17 +70,7 @@ function handleInput() {
 }
 
 function processGameLogic(input) {
-    if (state.phase === 0) {
-        if (input.includes('게임 시작') || input.includes('시작')) {
-            state.phase = 1;
-            appendMessage('system', "캐릭터를 선택해주세요.");
-            showCharacterSelection();
-        } else {
-            setTimeout(() => {
-                appendMessage('system', "준비가 되셨다면 '게임 시작'을 입력해주세요.");
-            }, 500);
-        }
-    }
+    // Only used for potential future commands
 }
 
 function appendMessage(sender, text) {

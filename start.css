@@ -1,0 +1,63 @@
+/* Start Screen */
+#start-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+    text-align: center;
+    color: white;
+}
+
+#start-screen.hidden {
+    display: none;
+}
+
+.game-logo {
+    font-size: 4rem;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.1;
+    text-shadow: 4px 4px 0px #000;
+    font-family: 'Nanum Pen Script', cursive;
+    color: #f1c40f;
+    transform: rotate(-3deg);
+    margin-bottom: 0.5rem;
+}
+
+.game-subtitle {
+    font-size: 1.2rem;
+    margin-top: 0;
+    margin-bottom: 40px;
+    opacity: 0.8;
+}
+
+#game-start-btn {
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: var(--accent-color);
+    color: white;
+    border: 3px solid #000;
+    box-shadow: 5px 5px 0px #000;
+    cursor: pointer;
+    font-family: inherit;
+    transition: transform 0.1s;
+}
+
+#game-start-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0px #000;
+    background-color: #ff6b6b;
+}
+
+#game-start-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0px #000;
+}
