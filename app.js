@@ -53,7 +53,48 @@ document.addEventListener('DOMContentLoaded', () => {
             showCharacterSelection();
         }, 500);
     });
+
+    // Global Click Effect
+    document.addEventListener('click', (e) => {
+        spawnParticles(e.clientX, e.clientY);
+
+        // Add pulse effect to buttons
+        if (e.target.tagName === 'BUTTON') {
+            e.target.classList.add('btn-clicked');
+            setTimeout(() => e.target.classList.remove('btn-clicked'), 400);
+        }
+    });
 });
+
+function spawnParticles(x, y) {
+    const particleCount = 8;
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'click-particle';
+        document.body.appendChild(particle);
+
+        // Set fixed position
+        particle.style.left = `${x}px`;
+        particle.style.top = `${y}px`;
+
+        // Random direction
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = Math.random() * 60 + 40;
+        const tx = Math.cos(angle) * velocity;
+        const ty = Math.sin(angle) * velocity;
+
+        // Custom props for animation
+        particle.style.setProperty('--tx', `${tx}px`);
+        particle.style.setProperty('--ty', `${ty}px`);
+
+        // Random color variation (Red, Blue, Yellow for comic feel)
+        const colors = ['#e74c3c', '#3498db', '#f1c40f'];
+        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+        // Clean up
+        setTimeout(() => particle.remove(), 600);
+    }
+}
 
 function handleInput() {
     if (state.isWaiting) return;
